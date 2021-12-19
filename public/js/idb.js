@@ -13,6 +13,10 @@ request.onupgradeneeded = function(event) {
     db.createObjectStore('new_transaction', { keyPath: "id", autoIncrement: true });
 };
 
+request.onerror = function(event) {
+    console.log(event.target.errorCode);
+};
+
 request.onsuccess = function(event) {
     db = event.target.result;
 
@@ -21,24 +25,20 @@ request.onsuccess = function(event) {
     }
 };
 
-request.onerror = function(event) {
-    console.log(event.target.errorCode);
-};
-
 function saveRecord(record) {
-    const transaction = db.transaction(['new_transaction'], 'readwrite');
+    const transaction = db.transaction('new_transaction', 'readwrite');
     const budgetObjectStore = transaction.objectStore('new_transaction');
     budgetObjectStore.add(record);
 };
 
 function uploadTransaction() {
-    const transaction = db.transaction(['new_transaction'], 'readwrite');
+    const transaction = db.transaction('new_transaction', 'readwrite');
     const budgetObjectStore = transaction.objectStore('new_transaction');
     const getAll = budgetObjectStore.getAll();
 
     getAll.onsuccess = function() {
         if (getAll.result.length > 0) {
-            fetch('/api/transaction', {
+            fetch('/api/transaction/bulk', {
                 method: 'POST',
                 body: JSON.stringify(getAll.result),
                 headers: {
@@ -46,14 +46,11 @@ function uploadTransaction() {
                     'Content-Type': 'application.json'
                 }
             })
-            .then(response => response.json()).then(serverResponse => {
-                if (serverResponse.message) {
-                    throw new Error(serverResponse);
-                }
-                const transaction = db.transaction(['new_transaction'], 'readwrite');
+            .then((response) => response.json())
+            .then(() => {
+                const transaction = db.transaction('new_transaction', 'readwrite');
                 const budgetObjectStore = transaction.objectStore('new_transaction');
                 budgetObjectStore.clear();
-                alert('All transactions have been submitted');
             })
             .catch(err => {
                 console.log(err);
