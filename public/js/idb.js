@@ -1,10 +1,3 @@
-const indexedDB =
-window.indexedDB ||
-window.mozIndexDB ||
-window.webkitIndexDB ||
-window.msIndexedDB ||
-window.shimIndexedDB;
-
 let db;
 const request = indexedDB.open("budget_tracker", 1);
 
