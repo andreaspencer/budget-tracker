@@ -22,6 +22,7 @@ This web application is able to track withdrawls and deposits made with or witho
     - open the repo locally using code . to launch code on VS
 
 ##### Screenshot
+<img width="1387" alt="Screen Shot 2022-01-10 at 4 24 25 PM" src="https://user-images.githubusercontent.com/87836575/149264634-6f57739e-0b72-4b55-85dc-60dadf896e97.png">
 
 ###### Live URL
 https://challenge19-budget-tracker.herokuapp.com/
