@@ -26,3 +26,6 @@ This web application is able to track withdrawls and deposits made with or witho
 
 ###### Live URL
 https://challenge19-budget-tracker.herokuapp.com/
+
+##### Video Link
+https://watch.screencastify.com/v/FhkE1l4H1aqWRvDqUcqH
